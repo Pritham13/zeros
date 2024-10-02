@@ -46,6 +46,6 @@ __attribute__((naked)) void SysTick_Handler(void) {
             "BL      Context_Switch\n"
             "POP     {r4-r11}\n"
             "BX      r0\n"
-            "CPSID   I" 
+            "CPSIE   I" 
         ); 
 }

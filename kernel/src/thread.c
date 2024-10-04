@@ -1,12 +1,6 @@
 #include "thread.h"
+
 tcb *currentTcb ;
-void systick_init(uint32_t ticks) {
-  if ((ticks - 1) > 0xffffff) return;  // Systick timer is 24 bit
-  SYSTICK->LOAD = ticks - 1;
-  SYSTICK->VAL = 0;
-  SYSTICK->CTRL = BIT(0) | BIT(1) | BIT(2);  // Enable systick
-  RCC->APB2ENR |= BIT(14);
-}
 
 uint32_t Context_Switch(uint32_t lr , uint32_t caleeRegs ) {
   
@@ -31,8 +25,8 @@ uint32_t Context_Switch(uint32_t lr , uint32_t caleeRegs ) {
     caleeRegs[i] = currentTcb -> calleeRegs[i] ;
   }
   /* Set PSP and PSP Limit */
-  __set_PSPLIM ((uint32_t)(currentContext -> stackLimit));
-  __set_PSP((uint32_t)(currentContext -> stackPtr));
+  __set_PSPLIM ((uint32_t)(currentTcb -> stackLimit));
+  __set_PSP((uint32_t)(currentTcb -> stackPtr));
   return currentTcb -> lr ;
 
 }

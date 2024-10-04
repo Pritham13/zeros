@@ -22,13 +22,10 @@ typedef struct tcb {
   uint32_t timeout ;
   uint8_t threadID ;
 } tcb
-// structure to get data on systick registers
-struct systick {
-  volatile uint32_t CTRL, LOAD, VAL, CALIB;
-};
+
+uint32_t Context_Switch (uint32_t lr , uint32_t calleRegs ) ;
+
+void SysTick_Handler(void) ;
 
 
-/* Functions declarations */
-void systick_init(uint32_t ticks)
-  
 #endif /*THREAD_H*/ 

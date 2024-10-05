@@ -1,4 +1,4 @@
-#include "thread.h"
+#include "../inc/kernel.h"
 
 tcb *currentTcb ;
 

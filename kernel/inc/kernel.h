@@ -13,6 +13,9 @@
 
 // Task control block is implemented as a linked list 
 typedef struct tcb { 
+  char *taskName ;
+  (void) ( * funcPtr ) (void) ;
+  uint8_t priority ;
   int32_t *stackPtr ;
   uint32_t StackLimit ;
   uint32_t calleeRegs[NUM_OF_CALEE_REGS] ;

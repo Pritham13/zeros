@@ -7,7 +7,7 @@ uint32_t Context_Switch(uint32_t lr , uint32_t caleeRegs ) {
   for (int i = 0 ; i < NUM_OF_CALEE_REGS; i++ ) {
     currentTcb -> calleeRegs[i] = caleeRegs[i];
   }
-
+  currentTcb -> lr = lr ;
   currentTcb->stackPtr = __get_PSP() ; // gets the Processor stack Pointer for the current task
   /* Scheduling block to be added later */
   if(currentTcb == tcbThreadA)
@@ -31,15 +31,6 @@ uint32_t Context_Switch(uint32_t lr , uint32_t caleeRegs ) {
 
 }
 
-__attribute__((naked)) void SysTick_Handler(void) {
-  __asm(
-            "CPSID   I\n" 
-            "PUSH    {r4-r11}\n"
-            "MOV     r1,sp\n"
-            "MOV     r0,lr\n"
-            "BL      Context_Switch\n"
-            "POP     {r4-r11}\n"
-            "BX      r0\n"
-            "CPSIE   I" 
-        ); 
+extern __attribute__((naked)) void SysTick_Handler(void) {
+  SWITCH_STATE;
 }

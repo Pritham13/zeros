@@ -9,7 +9,6 @@
 #define NUM_OF_CALEE_REGS 8
 #define TOTAL_THREADS 3
 #define Stacksize     100
-#define SYSTICK ((struct systick *) 0xe000e010)
 /* macro to switch state */
 #define SWITCH_STATE __asm(
             "CPSID   I\n" 
@@ -39,6 +38,9 @@ typedef struct tcb {
   uint32_t timeout ;
   uint8_t threadID ;
 } tcb
+
+void OS_init (void) ;
+void OS_start (void) ;
 
 uint32_t Context_Switch (uint32_t lr , uint32_t calleRegs ) ;
 

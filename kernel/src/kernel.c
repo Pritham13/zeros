@@ -2,7 +2,7 @@
 #include "../../main/sysCalls.h"
 tcb *currentTcb ;
 
-uint32_t Context_Switch(uint32_t lr , uint32_t caleeRegs ) {
+uint32_t Context_Switch(uint32_t lr , uint32_t *caleeRegs ) {
   
   for (int i = 0 ; i < NUM_OF_CALEE_REGS; i++ ) {
     currentTcb -> calleeRegs[i] = caleeRegs[i];
@@ -35,6 +35,11 @@ void OS_init (void) {
   systick_init( ) ; // Systick initialization put the clock value later
   
 }
+
 extern __attribute__((naked)) void SysTick_Handler(void) {
   SWITCH_STATE;
+}
+
+void OS_start (void) {
+
 }

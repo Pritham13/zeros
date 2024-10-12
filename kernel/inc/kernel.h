@@ -2,9 +2,6 @@
 
 #ifndef THREAD_H
 #define THREAD_H
-/* Macros */ 
-#define BIT(x) (1UL << (x))
-
 /* Constants */
 #define NUM_OF_CALEE_REGS 8
 #define TOTAL_THREADS 3
@@ -39,6 +36,7 @@ typedef struct tcb {
   uint8_t threadID ;
 } tcb
 
+tcb currentTcb ;
 void OS_init (void) ;
 void OS_start (void) ;
 

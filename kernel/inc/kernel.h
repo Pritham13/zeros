@@ -14,11 +14,11 @@
             "MOV     r0,lr\n"
             "BL      Context_Switch\n"
             "POP     {r4-r11}\n"
-            "BX      r0\n"
+            "BX      r0\n" //NOTE: This line has to be checked for functionatlity
             "CPSIE   I" 
-        ); 
-#define EN_Intr __asm("CPSIE   I") ;
-#define DI_Intr __asm("CPSID   I") ;
+        )
+#define EN_Intr __asm("CPSIE   I") 
+#define DI_Intr __asm("CPSID   I") 
 
 // Task control block is implemented as a linked list 
 typedef struct tcb { 

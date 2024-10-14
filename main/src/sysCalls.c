@@ -1,4 +1,4 @@
-#include <sysCalls.h>
+#include "sysCalls.h"
 
 void systick_init(uint32_t ticks) {
   if ((ticks - 1) > 0xffffff) return;  // Systick timer is 24 bit

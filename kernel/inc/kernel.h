@@ -7,21 +7,23 @@
 #define TOTAL_THREADS 3
 #define Stacksize     100
 /* macro to switch state */
-#define SWITCH_STATE __asm(
-            "CPSID   I\n" 
-            "PUSH    {r4-r11}\n"
-            "MOV     r1,sp\n"
-            "MOV     r0,lr\n"
-            "BL      Context_Switch\n"
-            "POP     {r4-r11}\n"
-            "BX      r0\n" //NOTE: This line has to be checked for functionatlity
-            "CPSIE   I" 
+#define SWITCH_STATE __asm( \
+            "CPSID   I\n" \
+            "PUSH    {r4-r11}\n" \
+            "MOV     r1,sp\n" \
+            "MOV     r0,lr\n" \
+            "BL      Context_Switch\n" \
+            "POP     {r4-r11}\n" \
+            "BX      r0\n" /*NOTE: This line has to be checked for functionality*/ \
+            "CPSIE   I" \
         )
 #define EN_Intr __asm("CPSIE   I") 
 #define DI_Intr __asm("CPSID   I") 
 
 // Task control block is implemented as a linked list 
 typedef struct tcb { 
+  tcb *next;
+  tcb *pvs;
   char *taskName ;
   void ( * funcPtr ) (void) ;
   uint8_t priority ;
@@ -34,9 +36,10 @@ typedef struct tcb {
   tcb *nextThreadPtr ; // for iterating through different tasks
   uint32_t timeout ;
   uint8_t threadID ;
-} tcb
+} tcb;
 
-tcb currentTcb ;
+tcb *currentTcb ;
+
 void OS_init (void) ;
 void OS_start (void) ;
 

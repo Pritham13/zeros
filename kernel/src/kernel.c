@@ -1,5 +1,5 @@
 #include "../inc/kernel.h"
-#include "../../main/sysCalls.h"
+#include "../../main/inc/sysCalls.h"
 
 uint32_t Context_Switch(uint32_t lr , uint32_t *caleeRegs ) {
   
@@ -9,14 +9,13 @@ uint32_t Context_Switch(uint32_t lr , uint32_t *caleeRegs ) {
     currentTcb -> lr = lr ;
     currentTcb->stackPtr = __get_PSP() ; // gets the Processor stack Pointer for the current task
     /* Scheduling block to be added later */
-    if(currentTcb == tcbThreadA)
-    currentTcb = *tcbThreadB ;
+    // if(currentTcb == tcbThreadA)
+    // currentTcb = *tcbThreadB ;
 
-    else if(currentTcb == tcbThreadB)
-    currentTcb = *tcbThreadA ;
+    // else if(currentTcb == tcbThreadB)
+    // currentTcb = *tcbThreadA ;
 
-    else
-    return -1 ; // indicates error in the thread will be changed to somethng else
+    // return -1 ; // indicates error in the thread will be changed to somethng else
 
     /* end of Scheduling block */
 
@@ -46,15 +45,15 @@ uint32_t thread_launcher (uint32_t lr , uint32_t *calleeRegs) {
 }
 
 __attribute__ ((naked)) void Start_OS (void) {
-   __asm(
-        "CPSID I\n"
-        "PUSH    {r4-r11}\n"
-        "MOV     r1,sp\n"
-        "MOV     r0,lr\n"
-        "BL      thread_launcher\n"
-        "POP     {r4-r11}\n"
-        "BX      r0\n" //NOTE: This line has to be checked for functionatlity
-        "CPSIE I"
+   __asm(\
+        "CPSID   I\n" \
+        "PUSH    {r4-r11}\n" \
+        "MOV     r1,sp\n" \
+        "MOV     r0,lr\n" \
+        "BL      Context_Switch\n" \
+        "POP     {r4-r11}\n" \
+        "BX      r0\n" /*NOTE: This line has to be checked for functionality*/ \
+        "CPSIE   I" \
     ); 
 }
 extern __attribute__((naked)) void SysTick_Handler(void) {
